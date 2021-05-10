@@ -4,7 +4,6 @@
     allowedTypes: [],
     orientation: 'HORIZONTAL',
     jsx: (() => {
-        console.log("IN COMP")
         const { content, linkType, linkTo, linkToExternal, useInnerHtml } = options;
         const { Link } = window.MaterialUI.Core;
         const { env, useText, Link: BLink } = B;

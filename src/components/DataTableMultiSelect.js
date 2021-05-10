@@ -75,8 +75,11 @@
     const [showPagination, setShowPagination] = useState(false);
     const { label: searchPropertyLabel = '{property}' } =
       getProperty(searchProperty) || {};
+    const orderPropertyPath = Array.isArray(orderProperty.id)
+      ? orderProperty.id
+      : null;
     const [orderBy, setOrderBy] = React.useState({
-      field: [orderProperty].flat() || null,
+      field: orderPropertyPath,
       order: orderProperty ? sortOrder : null,
     });
     const [results, setResults] = useState([]);
@@ -91,10 +94,9 @@
     const history = isDev ? null : useHistory();
 
     const createSortObject = (fields, order) => {
-      const fieldsArray = [fields].flat();
-      const sort = fieldsArray.reduceRight((acc, property, index) => {
+      const sort = fields.reduceRight((acc, property, index) => {
         const prop = getProperty(property);
-        return index === fieldsArray.length - 1
+        return index === fields.length - 1
           ? { [prop.name]: order.toUpperCase() }
           : { [prop.name]: acc };
       }, {});
@@ -102,10 +104,11 @@
       return sort;
     };
     const [variables, setVariables] = useState(
-      orderProperty
+      orderPropertyPath
         ? {
           sort: {
-            relation: !isDev && createSortObject(orderProperty, sortOrder),
+            relation:
+              !isDev && createSortObject(orderPropertyPath, sortOrder),
           },
         }
         : {},
@@ -114,7 +117,7 @@
     const titleText = useText(title);
     const hasToolbar = titleText || (searchProperty && !hideSearch);
     const elevationLevel = variant === 'flat' ? 0 : elevation;
-    const hasLink = linkTo && linkTo != '' && linkTo.id !== '' && !multiSelectRows;
+    const hasLink = linkTo != '' && linkTo.id !== '';
     const toolbarRef = React.createRef();
     const paginationRef = React.createRef();
     const [stylesProps, setStylesProps] = useState(null);
@@ -245,6 +248,9 @@
       setSearch(event.target.value);
     });
 
+    B.defineFunction('ClearSelectedTableRows', event => {
+      setSelectedRows([]);
+    });
 
     useEffect(() => {
       if (!isDev) return;
@@ -320,7 +326,7 @@
     const handleRowClick = (endpoint, context) => {
       if (isDev) return;
 
-      if (multiSelectRows) {
+      if (multiSelectRows && !hasLink) {
         handleCheckboxClick(null, context.modelData.id);
         return;
       }
@@ -386,12 +392,17 @@
       if ((loading && !loadOnScroll) || error) {
         return Array.from(Array(rowsPerPage).keys()).map(idx => (
           <TableRow key={idx} classes={{ root: classes.bodyRow }}>
-            {Array.from(Array(children.length).keys()).map(colIdx => (
-              <TableCell key={colIdx}>
-                <div className={classes.skeleton} />
-              </TableCell>
-            ))}
-          </TableRow>
+            {multiSelectRows && (<TableCell key='-1'>
+              <div className={classes.skeleton} />
+            </TableCell>)}
+            {
+              Array.from(Array(children.length).keys()).map(colIdx => (
+                <TableCell key={colIdx}>
+                  <div className={classes.skeleton} />
+                </TableCell>
+              ))
+            }
+          </TableRow >
         ));
       }
 

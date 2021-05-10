@@ -1,5 +1,5 @@
 (() => ({
-  name: 'Data Table',
+  name: 'Multiselect Data Table',
   icon: 'DataTable',
   category: 'DATA',
   keywords: ['Data', 'table', 'datatable', 'collection'],
@@ -393,7 +393,7 @@
             ],
             condition: {
               type: 'SHOW',
-              option: 'orderPmultiSelectRowsroperty',
+              option: 'multiSelectRows',
               comparator: 'EQ',
               value: true,
             },

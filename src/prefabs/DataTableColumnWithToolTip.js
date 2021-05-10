@@ -1,5 +1,5 @@
 (() => ({
-  name: 'Data Table Column',
+  name: 'Multiselect Data Table Column',
   icon: 'DataTableColumn',
   category: 'DATA',
   keywords: ['Data', 'table', 'column', 'datatablecolumn'],
