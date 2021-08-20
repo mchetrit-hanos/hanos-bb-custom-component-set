@@ -5,15 +5,15 @@
   "license": "UNLICENSED",
   "private": true,
   "devDependencies": {
-    "@betty-blocks/cli": "^23.48.0",
+    "@betty-blocks/cli": "^23.50.0",
     "eslint": "^5.9.0",
     "eslint-config-airbnb": "17.1.0",
     "eslint-config-prettier": "^3.3.0",
-    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-import": "^2.24.1",
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-prettier": "^3.0.0",
     "eslint-plugin-react": "^7.24.0",
-    "nodemon": "^1.19.1",
+    "nodemon": "^2.0.12",
     "prettier": "^1.15.3",
     "rimraf": "^3.0.0"
   },
@@ -28,6 +28,7 @@
     "dist"
   ],
   "dependencies": {
-    "npm": "^7.20.3"
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "npm": "^7.21.0"
   }
 }
