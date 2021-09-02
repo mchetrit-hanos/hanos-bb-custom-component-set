@@ -148,8 +148,15 @@
 
         const formatNumber = n => {
             // format number 1000000 to 1,234,567
-            return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-            // return n.replace(/\d/g, "").replace(/\B(?=(\-\d{3})+(?!\d))/g, ".");
+            if (n.charAt(0) === "-") {
+
+                n = n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                n = "-" + n;
+                return n;
+            }
+            else {
+                return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            }
         }
         const formatCurrency = input => {
             // appends $ to value, validates decimal side
