@@ -1,20 +1,26 @@
 (() => ({
-    name: 'Custom Input with Autoformat',
-    icon: 'PriceInputIcon',
+    name: 'CustomAutoFormat',
+    icon: 'TextInputIcon',
     category: 'FORM',
     keywords: ['Form', 'text', 'field', 'textfield', 'input', 'textinput'],
-  structure: [
-    {
-          name: 'InputAutoformatted',
+    structure: [
+        {
+            name: 'CustomAutoFormat',
             options: [
                 {
-                    value: { label: [], value: [] },
+                    value: { label: ['Textfield'], value: [] },
                     label: 'Label',
                     key: 'customModelAttribute',
                     type: 'CUSTOM_MODEL_ATTRIBUTE',
                     configuration: {
                         allowedTypes: ['string'],
                     },
+                },
+                {
+                    value: true,
+                    label: 'Autocomplete',
+                    key: 'autoComplete',
+                    type: 'TOGGLE',
                 },
                 {
                     value: false,
