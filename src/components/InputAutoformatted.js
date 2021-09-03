@@ -149,7 +149,6 @@
         const formatNumber = n => {
             // format number 1000000 to 1,234,567
             if (n.charAt(0) === "-") {
-
                 n = n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
                 n = "-" + n;
                 return n;
@@ -157,57 +156,48 @@
             else {
                 return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ".");
             }
-        }
-        const formatCurrency = input => {
+        } 
+
+        const formatCurrency = (input) => {
             // appends $ to value, validates decimal side
             // and puts cursor back in right position.
 
-            // get input value or get input value with - char
-            debugger;
+            const DECIMAL_SERPATOR = ',';
             let input_val = input;
-            // check if there's a - infront of the digit
-            // const minus_char = input_val.charAt(0);
-            // if (minus_char === "_") {
-            //     return "-" + input_val;
-            // }
-
-            // don't validate empty input
+            const decimalPosition = input.indexOf(DECIMAL_SERPATOR);
+            
             if (input_val === "") { return; }
 
-            if (input_val.indexOf(",") >= 0) {
-
-                // get position of first decimal
-                // this prevents multiple decimals from
-                // being entered
-                const decimal_pos = input_val.indexOf(",");
+        if (decimalPosition >= 0) {
+                // console.log("Je bent in de if - 3 digits");
 
                 // split number by decimal point
-                let left_side = input_val.substring(0, decimal_pos);
-                let right_side = input_val.substring(decimal_pos);
+                let left_side = input_val.substring(0, decimalPosition);
+                let right_side = input_val.substring(decimalPosition);
 
                 // add commas to left side of number
                 left_side = formatNumber(left_side);
 
-                // validate right side
-                right_side = formatNumber(right_side);
-
-                // On blur make sure 2 numbers after decimal
-                // if (blur === "blur") {
-                //   right_side += "00";
-                // }
 
                 // Limit decimal to only 2 digits
-                right_side = right_side.substring(0, 2);
-
+                right_side = right_side.substring(0, 3);
+            
                 // join number by .
-                input_val = left_side + "," + right_side;
+                input_val = left_side + right_side;
 
-            } else {
+        } else {
                 input_val = formatNumber(input_val);
+                // input_val = input_val;
             }
 
             return input_val;
+        };
 
+        const floatToEuro = float => {
+            let newNumber
+            newNumber = float.toLocaleString('nl-NL', { minimumFractionDigits: 2 });
+            console.log("newnumber D= "+newNumber);
+            return newNumber;
         };
 
         const changeHandler = event => {
