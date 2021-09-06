@@ -166,38 +166,26 @@
             let input_val = input;
             const decimalPosition = input.indexOf(DECIMAL_SERPATOR);
             
-            if (input_val === "") { return; }
+        if (input_val === "") { return; }
 
         if (decimalPosition >= 0) {
-                // console.log("Je bent in de if - 3 digits");
+            // console.log("Je bent in de if - 3 digits");
 
-                // split number by decimal point
-                let left_side = input_val.substring(0, decimalPosition);
-                let right_side = input_val.substring(decimalPosition);
+            // split number by decimal point
+            let left_side = input_val.substring(0, decimalPosition);
+            let right_side = input_val.substring(decimalPosition);
 
-                // add commas to left side of number
-                left_side = formatNumber(left_side);
-
-
-                // Limit decimal to only 2 digits
-                right_side = right_side.substring(0, 3);
-            
-                // join number by .
-                input_val = left_side + right_side;
+            // add commas to left side of number
+            left_side = formatNumber(left_side);
+            // Limit decimal to only 2 digits
+            right_side = right_side.substring(0, 3);
+            // join number
+            input_val = left_side + right_side;
 
         } else {
-                input_val = formatNumber(input_val);
-                // input_val = input_val;
-            }
-
+            input_val = formatNumber(input_val);
+        }
             return input_val;
-        };
-
-        const floatToEuro = float => {
-            let newNumber
-            newNumber = float.toLocaleString('nl-NL', { minimumFractionDigits: 2 });
-            console.log("newnumber D= "+newNumber);
-            return newNumber;
         };
 
         const changeHandler = event => {
@@ -222,11 +210,11 @@
         const blurHandler = event => {
             const { target } = event;
             let { validity: validation } = target;
-
+            const { value: eventValue } = target;
             if (isNumberType || multiline) {
                 validation = customPatternValidation(target);
+                
             }
-
             setAfterFirstInvalidation(!validation.valid);
             handleValidation(validation);
         };
