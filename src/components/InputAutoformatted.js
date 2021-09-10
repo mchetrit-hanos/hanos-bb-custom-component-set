@@ -159,17 +159,14 @@
         } 
 
         const formatCurrency = (input) => {
-            // appends $ to value, validates decimal side
-            // and puts cursor back in right position.
-
             const DECIMAL_SERPATOR = ',';
             let input_val = input;
             const decimalPosition = input.indexOf(DECIMAL_SERPATOR);
-            
+        // if there is no value in the input 
         if (input_val === "") { return; }
-
+        
+        // if the comma is in a position 
         if (decimalPosition >= 0) {
-            // console.log("Je bent in de if - 3 digits");
 
             // split number by decimal point
             let left_side = input_val.substring(0, decimalPosition);
