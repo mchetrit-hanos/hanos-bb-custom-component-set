@@ -65,7 +65,7 @@
             required: defaultRequired = false,
         } = customModelAttributeObj;
         const [currentValue, setCurrentValue] = useState(
-            useText(defaultValue, { rawValue: true }),
+            useText(defaultValue, { rawValue: false }),
         );
         const labelText = useText(label);
         const customModelAttribute = getCustomModelAttribute(
@@ -199,7 +199,7 @@
             if (afterFirstInvalidation) {
                 handleValidation(validation);
             }
-            const value = isNumberType ? numberValue : formatCurrency(eventValue);
+            const value = isNumberType ? numberValue : eventValue;
             setCurrentValue(value);
             B.triggerEvent('onChange', value);
         };
@@ -210,8 +210,15 @@
             const { value: eventValue } = target;
             if (isNumberType || multiline) {
                 validation = customPatternValidation(target);
-                
             }
+
+            const numberValue =
+                isNumberType && eventValue && parseInt(eventValue, 10);
+            
+            const value = isNumberType ? numberValue : formatCurrency(eventValue);
+            setCurrentValue(value);
+            B.triggerEvent('onBlur', value);
+            
             setAfterFirstInvalidation(!validation.valid);
             handleValidation(validation);
         };
